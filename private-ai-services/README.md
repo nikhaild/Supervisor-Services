@@ -3,7 +3,7 @@
 Private AI Services (PAIS) supervisor service was introduced at version 2.0 as part of [VMware Private AI Foundation with NVIDIA 9.0][pdf-docs].
 More information is available in [this blog post][official-blog-post] and [this blog series][wlam-blog].
 (The 1.0 version of PAIS did not provide a Supervisor Service component.)
-Following versions of PAIS Supervisor Services are available:
+The following versions of PAIS Supervisor Services are available:
 
 | Supported VCF/Supervisor versions  |  PAIS  |
 | ---------------------------------- | ------ |
@@ -11,7 +11,7 @@ Following versions of PAIS Supervisor Services are available:
 | 9.0.\*, 9.1.\*                     | [2.1][pais-download] |
 
 ## PAIS CRDs
-PAIS is operated via two new Custom Resource Definitions (CRDs) into your Supervisor cluster:
+PAIS is operated via two Kubernetes Custom Resource Definitions (CRDs) available in your Supervisor cluster:
 - `PAISConfiguration` is a singleton per-namespace, where you specify a database, certificates, authentication, and other configuration for a PAIS "instance" within that namespace, including a PAIS API server and web UI.
 - `ModelEndpoint`s configure inference servers for a given AI model, using VMs within your namespace, with routing via the namespace-level PAIS API server.
 
