@@ -79,7 +79,7 @@ spec:
   # Observability configuration is optional. Following prometheusRuntime configuration enables metrics
   # collection from various PAIS components into a prometheus-server deployed within the same namespace,
   # with specified metrics retention period on storage backed by a PVC provisioned from the given storage
-  # class. See [README.md "Observability: Metrics"](README.md#observability-metrics) section for more details.
+  # class. See accompanying README.md "Observability: Metrics Configuration" section for more details.
   #observability:
   #  prometheusRuntime:
   #    metricsRetention: 30d
