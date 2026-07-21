@@ -12,6 +12,8 @@ Explore VCF services purpose-built to accelerate modern application delivery and
 
 #### Please refer to [How to find and install Supervisor Services](#how-to-find-and-install-supervisor-services) to find and install supervisor services.
 
+Starting VCF 9.1.0, the compatible service versions with which Supervisor versions can be found in [Interoperability Matrix](https://interopmatrix.broadcom.com/Interoperability).
+
 Prior to vSphere 8 Update 1, the Supervisor Services are only available with Supervisor Clusters enabled using VMware NSX-T. With vSphere 8 U1, Supervisor Services are also supported when using the vSphere Distributed Switch (VDS) networking stack.
 
 | Supervisor Service | vSphere 7 | vSphere 8 | VCF 9 |
@@ -38,18 +40,19 @@ Prior to vSphere 8 Update 1, the Supervisor Services are only available with Sup
 
 1. Log in to [support.broadcom.com](https://support.broadcom.com)
 
-2. Select `Enterprise Software` on the left hand side navigation.
+2. Select `Software` on the left hand side navigation, and click on `Enterprise Software`, then click on `My Downloads`.
 
 <img src="main.png" width="750" height="300"  title="Home" id="home">
 
 3. All services are entitled under VCF or legacy SKUs and can be downloaded directly from `My Downloads`.
-Select `My Downloads` on the left hand side navigation and search for `vSphere Supervisor Services`.
+Search for `vSphere Supervisor Services` under `My Downloads`.
 
 <img src="vcf-entitlement.png" width="750" height="300"  title="Home" id="home">
 
 4. If you are looking to download VMware Private AI Services, go to `My Downloads` and then search for `VMware Private AI Services`.
 
 5. Next navigate to the service of choice and version you are looking to install.
+#### Please check [Interoperability Matrix](https://interopmatrix.broadcom.com/Interoperability) to find out which service version is compatible with which Supervisor version.
 
 6. To download files, first you need to click `Terms and Conditions` to activate the checkbox.
 
@@ -61,11 +64,12 @@ Select `My Downloads` on the left hand side navigation and search for `vSphere S
 
 8. Click on the download icon on the service definition as well as any additional files (such as values.yaml files, etc.)
 
+> ⚠️ Services released with VCF 9.1.0 or later may include two YAML definitions: a 'legacy' version (file name contains word `legacy`) for pre-9.1.0 VCF deployments or air-gapped VCF environments, and a standard version for VCF 9.1.0+ deployments with VCF Software Depot supported.
+
 > ⚠️ Service configuration value fields may change for each version. If a `values.yaml` manifest is available under the selected service version, consider downloading it, editing it if needed, and providing it when installing or upgrading to that service version.
+<img src="legacy-download.png" width="750" height="300" title="How to Download legacy YAML" id="legacy-download">
 
 9. You can now proceed to install your service.
-
-#### Please check [Interoperability Matrix](https://interopmatrix.broadcom.com/Interoperability) to find out which service version is compatible with which Supervisor version.
 
 ## Supervisor Services Catalog
 
@@ -77,7 +81,7 @@ Select `My Downloads` on the left hand side navigation and search for `vSphere S
   - [Backup \& Recovery Service](#backup--recovery-service)
     - [Velero vSphere Operator CLI Versions](#velero-vsphere-operator-cli-versions)
     - [Velero Versions](#velero-versions)
-  - [Certificate Management Service](#certificate-management-service)
+  - [CA Cluster Issuer Service](#ca-cluster-issuer-service)
     - [CA Cluster Issuer Versions](#ca-cluster-issuer-versions)
   - [Cloud Native Registry Service](#cloud-native-registry-service)
     - [Harbor Versions](#harbor-versions)
@@ -99,6 +103,8 @@ Select `My Downloads` on the left hand side navigation and search for `vSphere S
     - [SRE Supervisor Role Service versions](#sre-supervisor-role-service-versions)
 ---
 - [Supervisor Services Labs Catalog](#supervisor-services-labs-catalog)
+  - [Headlamp](#headlamp)
+    - [Headlamp Versions](#headlamp-versions)
   - [External Secrets Operator](#external-secrets-operator)
     - [External Secrets Operator Versions](#external-secrets-operator-versions)
   - [RabbitMQ Cluster Kubernetes Operator](#rabbitmq-cluster-kubernetes-operator)
@@ -119,7 +125,7 @@ VMware vSphere Kubernetes Service (VKS, formerly known as the VMware Tanzu Kuber
 
 ### vSphere Kubernetes Service Versions
 
-The [Interoperability Matrix](https://interopmatrix.broadcom.com/Interoperability?col=820,18034,18430,18431,18448,18667,18589,18562,19031,19029,19027,19025&row=2,%261794,&isHidePatch=false&isHideLegacyReleases=false) shows each VKS version below, including compatible Kubernetes releases and the vCenter Server versions containing compatible Supervisor versions. Note that some compatible Kubernetes releases may have reached End of Service; refer to the [Product Lifecycle](https://support.broadcom.com/group/ecx/productlifecycle) tool (Division: "VMware Cloud Foundation", Product Name: "vSphere Kubernetes releases") to view End of Service dates for Kubernetes releases.
+The [Interoperability Matrix](https://interopmatrix.broadcom.com/Interoperability?col=820,18034,18430,18431,18448,18667,18589,18562,19031,19029,19027,19025&row=2,%261794,&isHidePatch=false&isHideLegacyReleases=false) shows each VKS version below, including compatible Kubernetes releases and the vCenter Server versions containing compatible Supervisor versions. Please refer to [VKS release notes documentation](https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vsphere-supervisor-services-and-standalone-components/latest/release-notes/vmware-tanzu-kubernetes-grid-service-release-notes.html#GUID-166807c0-799a-4122-a5de-59c5d158b3e3-en_id-04d505aa-c276-45f3-8c00-b0c3657a956c) for newer VKS releases. Note that some compatible Kubernetes releases may have reached End of Service; refer to the [Product Lifecycle](https://support.broadcom.com/group/ecx/productlifecycle) tool (Division: "VMware Cloud Foundation", Product Name: "vSphere Kubernetes releases") to view End of Service dates for Kubernetes releases.
 
 - VKS v3.4.0
   - [Release Notes](https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vsphere-supervisor-services-and-standalone-components/latest/release-notes/vmware-tanzu-kubernetes-grid-service-release-notes.html#GUID-166807c0-799a-4122-a5de-59c5d158b3e3-en_id-e41377ae-b95a-4df2-8e72-f2424c8af0c3)
@@ -166,6 +172,7 @@ Installation instructions for installing the supervisor service can be found in 
 [Release 8.0U3](https://docs.vmware.com/en/VMware-vSphere/8.0/vsphere-with-tanzu-services-workloads/GUID-4843E6C6-747E-43B1-AC55-8F02299CC10E.html)
 
 - Version:
+    - 9.1.0
     - 9.0.2 [Release notes](./consumption-interface/Release_Notes_9_0_2.md)
     - 9.0.1 [Release notes](./consumption-interface/Release_Notes_9_0_1.md)
     - 9.0.0 [Release notes](./consumption-interface/Release_Notes_9_0_0.md)
@@ -230,7 +237,7 @@ Velero vSphere Operator helps users install Velero and its vSphere plugin on a v
     - v1.2.0
     - v1.1.0
 
-## [Certificate Management Service](https://support.broadcom.com) <a id='certificate-management-service'></a>
+## [CA Cluster Issuer Service](https://support.broadcom.com) <a id='ca-cluster-issuer-service'></a>
 
 #### Please refer to [How to find and install Supervisor Services](#how-to-find-and-install-supervisor-services) to find and install supervisor services.
 
@@ -288,6 +295,7 @@ Contour is an Ingress controller for Kubernetes that works by deploying the Envo
 
 ### Contour Versions
 
+- v1.33.1
 - v1.32.0
 - v1.31.1
 - v1.30.3
@@ -309,6 +317,8 @@ ExternalDNS publishes DNS records for applications to DNS servers, using a decla
 
 ### ExternalDNS Versions
 
+- v0.21.0+vmware.1
+- v0.18.0
 - v0.16.1+vmware.2
 - v0.14.2
 
@@ -316,6 +326,10 @@ ExternalDNS data `values.yaml`
 
 - Because of the large list of supported DNS providers, we do not supply complete sample configuration values here. If you're deploying ExternalDNS with Harbor and Contour, make sure to include `source=contour-httpproxy` in the configuration values. An *incomplete* example of the service configuration is included below. Make sure to setup API access to your DNS server and include authentication details with the service configuration.
 - Enabled RFC2136 TLS Connection Configuration from release 0.16.1. Detailed parameters refer to [external-dns/README-0.16.1.md](external-dns/README-0.16.1.md).
+- Enabled RFC2136 deployment container cpu & memory resources configurable from release 0.18.0. Detailed parameters refer to [external-dns/README-0.18.0.md](external-dns/README-0.18.0.md).
+- Starting with the v0.21.0 release, we are implementing 2 changes:
+   - Deprecating the `deployment.args "--rfc2136-tsig-secret"` flag and introduce the new configuration `rfc2136.tsigSecret`. This change aims to prevent the TSIG key from appearing in Pod specifications, audit logs, or process command lines. Detailed parameters refer to [external-dns/README-0.21.0.md](external-dns/README-0.21.0.md).
+   - The `HMAC-SHA1` algorithm has been removed from the TSIG secret support list, requiring users to upgrade their algorithm if they were previously using the removed version.
 
 ```yaml
 ---
@@ -327,12 +341,26 @@ tlsConfig:
   #! User requires to provide base64 encryption format of root ca.crt value 
   #! which uses to validate tls connection with DNS server once tls_enable=true
   ca_crt: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUZwekNDQTQrZ0F3SUJBZ0lVZmxLT3I0UkhickVzMG1ucTZKaTE4Y3FqRUQwd0RRWUpLb1pJaHZjTkFRRUwKQlFBd1l6RUxNQWtHQTFVRUJoTUNWVk14RGpBTUJnTlZCQWdNQlZOMFlYUmxNUTB3Q3dZRFZRUUhEQVJEYVhSNQpNUlV3RXdZRFZRUUtEQXhQY21kaGJtbDZZWFJwYjI0eERUQUxCZ05WQkFzTUJGVnVhWFF4RHpBTkJnTlZCQU1NCkJsSnZiM1JEUVRBZUZ3MHlOVEEwTWpnd056UTBNRFZhRncwek5UQTBNall3TnpRME1EVmFNR014Q3pBSkJnTlYKQkFZVEFsVlRNUTR3REFZRFZRUUlEQVZUZEdGMFpURU5NQXNHQTFVRUJ3d0VRMmwwZVRFVk1CTUdBMVVFQ2d3TQpUM0puWVc1cGVtRjBhVzl1TVEwd0N3WURWUVFMREFSVmJtbDBNUTh3RFFZRFZRUUREQVpTYjI5MFEwRXdnZ0lpCk1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQ0R3QXdnZ0lLQW9JQ0FRQzEvY3JmTTF1SGNqdy9HWWpJL3BRcmtTblEKRWZuRTN2byt3R1RTNkxUM0JvdmliTzR6UUpTM2E3STZoaytvdzNYMHlxVklwZUVyVFNtT08wR0xlMUZFTFdHbgpZZHM4UldwZ3dvZUhUN1NlSUVGSnFGMko2bFFKRmFXem5zUlhGdk4rbXlpWk41T2o1Q0w4akViSmo0Wkx3Q0ZOClZQV1dWTDZXSzdpaW9WK2tKRXdFMWp5SHVYbXZVQVlCVk9NZlZsa0ptb01mcy9ZL2RKbXJBb1Z6VlVsc1JzRGEKVTAweUhmdHE2cm83YXFMVXJKaTdjM1FqU3BGTTVTVkVVY0UwUjdQVFhMOGFXcXV5RVI3bWUySjBlMEgvMk5jMwpJVm5ONlNiZURwMS9PdTA3eGxncUZ1UXEzTjNwcXl1VEpSWW9XT0dHd1I2Q3J4L0pkUW4zbU90SFVDMEtwZTJwCi92eTNkVnFHN3ErZ3JwN0pBUFZ2Vkh4dmdYYkJka0RMYmxaMjZQOElxMUp6TTI5ZExRdjFqUnVMNFRmSG5xS0EKZmNKeWU5eWJmeWxkd0dGR2M1VXFPaHB1L1ZOak5lVDNtNHlTSnhCVmZ1Q1phZTBDaWZOMWZ1Nk1TdzJWRU4xbgpOWjdpODBpdTE0ZFAwenFKUnRoSHB6SisxYUx5WGpoSWN3YkZHRkNrODNtSHFadjYzT0owbllKY3ZIL2EvSDRtCm5Gdlcrcmh3TGx6R1JLOWMrWS8rOENNMC9FS3VVd21saWNhZWZwTVE1c1BEak5aVk5TeTMycFJlSmt6TTNvbWsKN21EK1hnT2JpbDZXMnNPb09lYkVzSm15Z0x1RlFJZ0s2NTJHbVoyNkJjc25rWmlKVXJYVFo1N2E5MnZvTlhvQwplUEtKSDZqOWxsTi8wQllrYVFJREFRQUJvMU13VVRBZEJnTlZIUTRFRmdRVXBtdnBBRHVWK0NVYjZ2eUNZeng5CjVLQlQ2ekl3SHdZRFZSMGpCQmd3Rm9BVXBtdnBBRHVWK0NVYjZ2eUNZeng5NUtCVDZ6SXdEd1lEVlIwVEFRSC8KQkFVd0F3RUIvekFOQmdrcWhraUc5dzBCQVFzRkFBT0NBZ0VBSThYTk8yQ0xvNWRDc1V6MEZEVTlZUkduT2Z1NApxWGVWOEg4K1czc290L2hBNk5BdGtvcUZqUUpWVmt5QVI4R3NtdnkxUFRRQlVxRTAvbE1DeWdNbGxwMVlwZnhNCmhwSUNWalp4bVZwQjBiTmpMMnJ5WWlrTGdjQVEzYTd5aWphTUFvaUlyREdxYVNodVVoMFFOWmVLUWxMdEJ3OTMKdFR3dGlQMjRFU0s3a05TOXR3blgwYWU0UTJLK09rdzZVQkVyd1h0TnZrKzBGUDAxcVJ4MXFsQ01CeCtqTHFiTgpwZ21PYjFxNFFQSGt4NzEvai9Gdm8xTUdRZm5McEJXakdaMmIvMW5FWEVvMHhVL3llYnpTYTBZT3Y3ZGptcjNqCkp5bHg2RkQySEpCS1ZsT0tBek1rNmlyaUpVeExDUnNSZlI1NEU3NG1TY0NVVXp1OS9UTTYwN2NFNmw4ZVB1VEEKL2FOMFlLeDV3ZEJkSkVadkxyUzVORTZpUjJ6WnVHamJTZFRWLzJFb3Zlc0pPQ1FkUGhYTm12T3lWK280TTRieQpKZ0U2WWxKWldnekVHa0Y2TWQvN3RmaG1BMDMxUUc4NnZqdVJVMWhWSC8vRmF2K3lac0NBRnBBYlNua004czdUCjNQQkxDOWFOSkFOOVVySTRnWGg2aWJFUGRMTnYwdE1hR0JwWDBVMFdub1R0WnlaMGJhVVlSUW90Ly94MGgvQU0KdnRFZlNtYlh0ZlZKZERqZHByTER0emxZWXhOTjVUWHdOTEpNYWJFekowVUV5ZE1NZGJocFN4cXJ4elFNWkhvSwpibFlzWS9hNFJVQXI4NVVjdC8xcjFlR0I0U2dUcVk0aTNMd1p6N2I3SHRZaUZQdmZ0SW5XWnJUbk0rQ2NwTmwzCnV5WUxhQThkd25QQWR1OD0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo="
-  
+
+#! Introduce new configuration to replace the `deployment.args "--rfc2136-tsig-secret=<Secret-Key>"`
+#! The old deployment.args will keep available for one or two releases for deprecating process.
+#! Suggest users switch to the new configuration, but please note that configuring both during deployment is not supported.
+rfc2136:
+  tsigSecret: <TSIG-SHARED-SECRET>
+
 deployment:
   args:
   - --source=contour-httpproxy
   - --source=service
   - --log-level=debug
+  #! Re-define the resource quota of external-dns pod/container if need
+  resources:
+    requests:
+      cpu: "150m"
+      memory: "256Mi"
+    limits:
+      cpu: "300m"
+      memory: "512Mi"
 ```
 
 Validated Supported DNS Server Example:
@@ -364,6 +392,7 @@ Supervisor Management Proxy supports following usecases:
 
 ### Supervisor Management Proxy Versions
 
+- v0.4.1 (requires vSphere 9.1.0 or later)
 - v0.4.0 (requires vSphere 9.0.1 or later)
 - v0.3.0 (requires vSphere 9.0 or later)
 
@@ -408,6 +437,7 @@ The Data Services Manager(DSM) Consumption Operator facilitates native, self-ser
 
 ### Data Services Manager Consumption Operator Versions
 
+- v9.1.0.0
 - v9.0.0.0
 - v2.2.1
 - v2.2.0
@@ -451,6 +481,7 @@ Secret Store Service is a comprehensive solution for managing secrets in vSphere
 
 ### Secret Store Service Versions 
 
+- v9.1.0.0
 - v9.0.0
 
 Secret Store Service sample `values.yaml`
@@ -493,6 +524,33 @@ The following Supervisor Services Labs catalog is only provided for testing and 
 
 **WARNING** - By downloading and using these solutions from the Supervisor Services Labs catalog, you explicitly agree to the conditional use **[license agreement](supervisor-services-labs/licence-agreement.md)**.
 
+**WARNING** - All Supervisor Services Labs are unsigned and should be used in conjuction with the descriptions above.
+
+## Headlamp
+
+<img src="supervisor-services-labs/headlamp/headlamp.png" width="200" title="Headlamp Logo" id="headlamp">
+
+Headlamp is an easy-to-use and extensible Kubernetes web UI. Headlamp was created to blend the traditional feature set of other web UIs/dashboards (i.e., listing and viewing resources) with additional functionality. Headlamp can be used in-cluster, via a web browser, or as a desktop application (using the information defined in the user’s kubeconfig). For a detailed description of Headlamp, visit [Headlamp](https://headlamp.dev/)
+
+### Headlamp Versions
+
+- Download latest version: [Headlamp 0.41.0](supervisor-services-labs/headlamp/v0.41.0/headlamp.yaml)
+
+Headlamp Sample [values.yaml](supervisor-services-labs/headlamp/v0.41.0/values.yaml) 
+
+#### Usage:
+- The current Supervisor Service uses an in-cluster approach, providing users with an easy-to-use web UI. It needs Internet access to download the Headlamp image and the CertManager and ClusterAPI plugins. The CertManager plugin provides certificate management and observability, while the ClusterAPI plugin manages VKS clusters via the Headlamp UI. Future versions will let users download these images and binaries from an airgapped environment.
+- The `values.yaml` file is optional. If you want to provide your own TLS certificate and key, you can override the default self-signed certificate using these options. TLS certificates and keys must be BASE64 encoded.
+- Headlamp is now exposed as a `LoadBalancer` service. In future versions, you will be able to use an L7 object to front-end the service. Get the LoadBalancer IP with this command:
+```
+kubectl get service headlamp-supervisor -n svc-headlamp-domain-xxxx 
+```
+- Get the token from your `kubeconfig` file - with the *current context* set to the Supervisor. 
+```
+kubectl config view --flatten --minify -o jsonpath='{.users[0].user.token}'
+```
+- Open a browser to the service's IP address and enter the token to successfully authenticate.
+- The number of clusters in the Supervisor can affect how long it takes the ClusterAPI plugin to become fully functional. Make sure the ClusterAPI plugin is installed for cluster management. For more details, [visit here](https://github.com/headlamp-k8s/plugins/tree/main/cluster-api)
 
 ## External Secrets Operator
 
